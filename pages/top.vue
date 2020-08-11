@@ -5,8 +5,9 @@
         slot="dateCell"
         slot-scope="{ date,data }">
           <p :class="data.isSelected ? 'is-selected' : ''">
-           <!--  {{ data.day.split('-').slice(2).join('-') }}{{ data.isSelected ? '✔️' : ''}} -->
+           {{ data.day.split('-').slice(2).join('-') }}{{ data.isSelected ? '✔️' : ''}}
           </p>
+          <p v-if="data.day == calendarEvents[0].start">{{calendarEvents[0].title}}</p>
 
        </div>
     </el-calendar>
