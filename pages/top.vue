@@ -7,8 +7,8 @@
           <p :class="data.isSelected ? 'is-selected' : ''">
            {{ data.day.split('-').slice(2).join('-') }}{{ data.isSelected ? '✔️' : ''}}
           </p>
-          <p v-if="data.day == calendarEvents[0].start">{{calendarEvents[0].title}}</p>
-
+          <!-- <p v-if="data.day == calendarEvents[0].start">{{calendarEvents[0].title}}</p> -->
+          <p v-if="data.day >= calendarEvents[0].start & data.day <= calendarEvents[0].end "> {{ calendarEvents[0].title }} </p>
        </div>
     </el-calendar>
   </div>
@@ -22,7 +22,7 @@ export default {
       {
         title:'報告会',
         start:'2020-08-24',
-        end:'2020-08-24',
+        end:'2020-08-28',
       },
      ]
    }
