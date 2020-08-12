@@ -19,6 +19,15 @@
     <input type="date" v-model="createEvent.start"></input>
     <label>endTime</label>
     <input type="date" v-model="createEvent.end"></input>
+    <label>color</label>
+    <el-select v-model="createEvent.color" placeholder="Select">
+        <el-option
+          v-for="color in options"
+          :key="color.value"
+          :label="color.label"
+          :value="color.value">
+        </el-option>
+      </el-select>
     <el-button type="info" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">NewEvents</el-button>
   </div>
 </template>
@@ -33,7 +42,23 @@ export default {
           start:'',
           end:'',
           color:''
-        }
+        },
+        options: [{
+                  value: '',
+                  label: 'blue'
+                }, {
+                  value: 'success',
+                  label: 'green'
+                }, {
+                  value: 'info',
+                  label: 'black'
+                }, {
+                  value: 'warning',
+                  label: 'orange'
+                }, {
+                  value: 'danger',
+                  label: 'red'
+                }],
       }
     },
     computed: {
