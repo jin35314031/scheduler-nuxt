@@ -7,32 +7,30 @@
         <!-- 日付を表示 -->
          <p :class="data.isSelected ? 'is-selected' : ''">
           <!-- {{ data.day.split('-').slice(2).join('-') }} -->
-          <el-button @click="drawer = true" type="" size="mini" circle>
+          <el-button @click="table = true" type="" size="mini" circle>
             {{ data.day.split('-').slice(2).join('-') }}
           </el-button>
+          {{ data.isSelected ? '✔️' : ''}}
          </p>
-        <!-- イベントを表示 -->
+      <!-- イベントを表示 -->
          <span v-for="event in events">
            <el-tag  v-if="data.day >= event.start & data.day <= event.end " v-bind:type="event.color"> {{ event.title}} </el-tag>
          </span>
-        <!-- 日程の詳細を表示 -->
+      <!-- 日程の詳細を表示 -->
         <!-- <el-button @click="drawer = true" type="primary" style="margin-left: 16px" icon="el-icon-check" size="mini" circle> -->
         <!-- </el-button> -->
-         <el-drawer
-           title="I'm outer Drawer"
-           :visible.sync="drawer"
-           size="50%">
-           <div>
-            <el-button @click="innerDrawer = true">Click me!</el-button>
-            <el-drawer
-              title="I'm inner Drawer"
-              :append-to-body="true"
-              :before-close="handleClose"
-              :visible.sync="innerDrawer">
-              <p>_(:зゝ∠)_</p>
-            </el-drawer>
-           </div>
-         </el-drawer>
+        <el-drawer
+          :visible.sync="table"
+          direction="ltr"
+          :with-header="false"
+          size="50%">
+          <el-table :data=$store.state.scheduler.events>
+              <el-table-column property="title" label="title" width="150"></el-table-column>
+              <el-table-column property="start" label="start" width="200"></el-table-column>
+              <el-table-column property="end" label="end"></el-table-column>
+          </el-table>
+          </el-drawer>
+
          <!-- <nuxt-link to="/date" >detail</nuxt-link> -->
       </div>
     </el-calendar>
@@ -84,24 +82,16 @@ export default {
                   value: 'danger',
                   label: 'red'
                 }],
-        drawer: false,
-        innerDrawer: false,
+        table: false,
+              dialog: false,
+              loading: false,
       }
     },
     computed: {
         events() {
           return this.$store.state.scheduler.events;
          }
-      },
-    methods: {
-          handleClose(done) {
-            this.$confirm('You still have unsaved data, proceed?')
-              .then(_ => {
-                done();
-              })
-              .catch(_ => {});
-          }
-        }
+      }
 }
 </script>
 
