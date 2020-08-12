@@ -18,7 +18,7 @@ export const state = () => ({
 export const mutations = {
   updateEvents:function(state,data){
     console.log('mutation')
-    state.events = data
+    state.events.push(data)
   }
 }
 

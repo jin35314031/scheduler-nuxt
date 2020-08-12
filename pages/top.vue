@@ -13,14 +13,13 @@
       </div>
     </el-calendar>
 
-
     <label>title</label>
     <input type="text" v-model="createEvent.title"></input>
     <label>startTime</label>
     <input type="date" v-model="createEvent.start"></input>
     <label>endTime</label>
     <input type="date" v-model="createEvent.end"></input>
-    <button v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">NewEvents</button>
+    <el-button type="info" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">NewEvents</el-button>
   </div>
 </template>
 
@@ -48,6 +47,6 @@ export default {
       color: #1989FA;
     }
   div.event{
-    background-color:rgb(255,0,0);
+    background-color:#409EFF;
   }
 </style>
