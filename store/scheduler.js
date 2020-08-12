@@ -1,11 +1,17 @@
 import Vuex from 'vuex'
 
 export const state = () => ({
-  events: [{
-    title:'報告会',
-    start:'2020-08-24',
-    end:'2020-08-28',
-  },
+  events: [
+    {
+      title:'報告会',
+      start:'2020-08-24',
+      end:'2020-08-28',
+    },
+    {
+      title:'出勤日',
+      start:'2020-08-14',
+      end:'2020-08-14'
+    }
   ]
 })
 

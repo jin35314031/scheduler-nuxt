@@ -2,14 +2,18 @@
   <div class="container">
     <el-calendar>
       <div
-        slot="dateCell"
-        slot-scope="{ date,data }">
-          <p :class="data.isSelected ? 'is-selected' : ''">
+       slot="dateCell"
+       slot-scope="{ date,data }">
+         <p :class="data.isSelected ? 'is-selected' : ''">
            {{ data.day.split('-').slice(2).join('-') }}{{ data.isSelected ? '✔️' : ''}}
-          </p>
-         <p v-if="data.day >= $store.state.scheduler.events[0].start & data.day <= $store.state.scheduler.events[0].end "> {{ $store.state.scheduler.events[0].title }} </p>
-       </div>
+         </p>
+         <div v-for="event in events" class="event">
+           <p v-if="data.day >= event.start & data.day <= event.end "> {{ event.title }} </p>
+         </div>
+      </div>
     </el-calendar>
+
+
     <label>title</label>
     <input type="text" v-model="createEvent.title"></input>
     <label>startTime</label>
@@ -30,7 +34,12 @@ export default {
           end:''
         }
       }
-    }
+    },
+    computed: {
+        events() {
+          return this.$store.state.scheduler.events;
+         }
+      }
 }
 </script>
 
@@ -38,4 +47,7 @@ export default {
   .is-selected {
       color: #1989FA;
     }
+  div.event{
+    background-color:rgb(255,0,0);
+  }
 </style>
