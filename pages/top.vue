@@ -7,9 +7,9 @@
          <p :class="data.isSelected ? 'is-selected' : ''">
            {{ data.day.split('-').slice(2).join('-') }}{{ data.isSelected ? '✔️' : ''}}
          </p>
-         <div v-for="event in events" class="event">
-           <p v-if="data.day >= event.start & data.day <= event.end "> {{ event.title }} </p>
-         </div>
+         <span v-for="event in events">
+           <el-tag  v-if="data.day >= event.start & data.day <= event.end " v-bind:type="event.color"> {{ event.title}} </el-tag>
+         </span>
       </div>
     </el-calendar>
 
@@ -23,6 +23,7 @@
   </div>
 </template>
 
+
 <script>
 export default {
   data:function(){
@@ -30,7 +31,8 @@ export default {
         createEvent:{
           title:'',
           start:'',
-          end:''
+          end:'',
+          color:''
         }
       }
     },
@@ -46,7 +48,4 @@ export default {
   .is-selected {
       color: #1989FA;
     }
-  div.event{
-    background-color:#409EFF;
-  }
 </style>
