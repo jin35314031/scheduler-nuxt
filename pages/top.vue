@@ -95,7 +95,7 @@ export default {
          }
       },
     methods:{
-      clickDay(day){
+      clickDay:async function(day){
       console.log(day);
       let clickDay = day
       return clickDay;

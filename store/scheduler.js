@@ -6,13 +6,15 @@ export const state = () => ({
       title:'報告会',
       start:'2020-08-24',
       end:'2020-08-28',
-      color:'success'
+      color:'success',
+      private:true
     },
     {
       title:'出勤日',
       start:'2020-08-14',
       end:'2020-08-14',
-      color:'warning'
+      color:'warning',
+      private:false
     }
   ]
 })
