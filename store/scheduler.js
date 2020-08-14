@@ -12,7 +12,9 @@ export const state = () => ({
     {
       title:'出勤日',
       start:'2020-08-14',
+      startTime:'06:00',
       end:'2020-08-14',
+      endTime:'18:00',
       color:'warning',
       private:false
     }
