@@ -8,7 +8,6 @@
          <p :class="data.isSelected ? 'is-selected' : ''" @click="table = true;clickDay(data.day)" style="width:100%">
             <el-button  type="" size="mini" circle>
              {{ data.day.split('-').slice(2).join('-') }}
-
             </el-button>
          </p>
       <!-- イベントを表示 -->
@@ -42,45 +41,18 @@
     <label>title</label>
     <input type="text" v-model="createEvent.title"></input>
 
-    <label>startTime</label>
-    <el-date-picker
-          v-model="createEvent.start"
-          type="date"
-          placeholder="Pick a day"
-          format="yyyy/MM/dd"
-          value-format="yyyy-MM-dd">
-    </el-date-picker>
-
-    <el-time-select
-      v-model="createEvent.startTime"
-      :picker-options="{
-        start: '00:00',
-        step: '00:30',
-        end: '23:30'
-      }"
-      placeholder="Select time">
-    </el-time-select>
-
-    <label>endTime</label>
-    <el-date-picker
-              v-model="createEvent.end"
-              type="date"
-              placeholder="Pick a day"
-              format="yyyy/MM/dd"
-              value-format="yyyy-MM-dd">
+    <span class="demonstration">Start to End Time</span>
+        <el-date-picker
+          v-model="createEvent.startEndTime"
+          type="datetimerange"
+          start-placeholder="Start Date"
+          end-placeholder="End Date"
+          :default-time="['12:00:00']"
+          format="yyyy/MM/dd HH:mm:ss"
+          value-format="yyyy-MM-dd HH:mm:ss">
         </el-date-picker>
 
-        <el-time-select
-          v-model="createEvent.endTime"
-          :picker-options="{
-            start: '00:00',
-            step: '00:30',
-            end: '23:30'
-          }"
-          placeholder="Select time">
-        </el-time-select>
-
-    <label>color</label>
+   <label>color</label>
     <el-select v-model="createEvent.color" placeholder="Select">
         <el-option
           v-for="color in options"
@@ -92,6 +64,7 @@
     <label>share</label>
     <el-switch v-model="createEvent.private"></el-switch>
     <el-button type="info" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">NewEvents</el-button>
+    {{createEvent.startEndTime}}
   </div>
 </template>
 
@@ -101,10 +74,7 @@ export default {
       return {
         createEvent:{
           title:'',
-          start:'',
-          startTime:'',
-          end:'',
-          endTime:'',
+          startEndTime:[],
           color:'',
           private:'false'
         },
@@ -131,8 +101,7 @@ export default {
                   }
         },
         table: false,
-        dialog: false,
-        loading: false,
+
       }
     },
     computed: {
