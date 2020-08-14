@@ -4,17 +4,17 @@ export const state = () => ({
   events: [
     {
       title:'報告会',
-      start:'2020-08-24',
-      end:'2020-08-28',
+      startDateTime:'2020-08-24 12:00',
+      endDateTime:'2020-08-28 15:00',
       color:'success',
       private:true
     },
     {
       title:'出勤日',
       startDateTime:'2020-08-14 06:00',
-      endDateTime:'2020-08-14 18:00',
+      endDateTime:'2020-08-16 18:00',
       color:'warning',
-      private:false
+      private:true
     }
   ]
 })

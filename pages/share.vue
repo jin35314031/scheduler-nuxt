@@ -12,7 +12,7 @@
          </p>
       <!-- イベントを表示 -->
          <span v-for="event in events">
-            <el-tag  v-if=" event.private && data.day >= event.start && data.day <= event.end " v-bind:type="event.color"> {{ event.title }} </el-tag>
+            <el-tag  v-if=" event.private && data.day >= event.startDateTime && data.day <= event.endDateTime " v-bind:type="event.color"> {{ event.title }} </el-tag>
          </span>
       <!-- 日程の詳細を表示 -->
         <el-drawer
