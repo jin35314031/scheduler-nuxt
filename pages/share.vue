@@ -8,11 +8,12 @@
          <p :class="data.isSelected ? 'is-selected' : ''" @click="table = true;clickDay(data.day)" style="width:100%">
             <el-button  type="" size="mini" circle>
              {{ data.day.split('-').slice(2).join('-') }}
+
             </el-button>
          </p>
       <!-- イベントを表示 -->
          <span v-for="event in events">
-            <el-tag  v-if=" !event.private && data.day >= event.start && data.day <= event.end " v-bind:type="event.color"> {{ event.title }} </el-tag>
+            <el-tag  v-if=" event.private && data.day >= event.start && data.day <= event.end " v-bind:type="event.color"> {{ event.title }} </el-tag>
          </span>
       <!-- 日程の詳細を表示 -->
         <el-drawer
@@ -23,8 +24,9 @@
 
           <h2>{{displayDate}}</h2>
           <el-timeline v-for="event in events" :key="event.title">
-             <el-timeline-item placement="top" timestamp=event.startTime v-if=" displayDate >= event.start && displayDate <= event.end" >
+             <el-timeline-item placement="top" timestamp=　"event.startTime.toString()" v-if=" displayDate >= event.start && displayDate <= event.end" >
                 <el-card >
+               　　{{event.startTime}}
                   {{event.title}}
                 </el-card>
              </el-timeline-item>
