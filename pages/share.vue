@@ -6,13 +6,13 @@
        slot-scope="{ date,data }">
       <!-- 日付を表示 -->
          <p :class="data.isSelected ? 'is-selected' : ''" @click="table = true;clickDay(data.day)" style="width:100%">
-            <el-button  type="" size="mini" circle>
+            <el-button type="" size="mini" circle>
              {{ data.day.split('-').slice(2).join('-') }}
             </el-button>
          </p>
       <!-- イベントを表示 -->
          <span v-for="event in events">
-            <el-tag  v-if=" event.private && data.day >= event.startDateTime && data.day <= event.endDateTime " v-bind:type="event.color"> {{ event.title }} </el-tag>
+            <el-tag  v-if=" event.private && $moment(date).format('YYYY-MM-DD') >= $moment(event.startDateTime).format('YYYY-MM-DD') && $moment(date).format('YYYY-MM-DD') <= $moment(event.endDateTime).format('YYYY-MM-DD') " v-bind:type="event.color"> {{ event.title }} {{$moment(event.startDateTime).format('YYYY-MM-DD')}}</el-tag>
          </span>
       <!-- 日程の詳細を表示 -->
         <el-drawer
@@ -25,8 +25,8 @@
           <el-timeline v-for="event in events" :key="event.title">
              <el-timeline-item placement="top" timestamp=　"event.startTime.toString()" v-if=" displayDate >= event.start && displayDate <= event.end" >
                 <el-card >
-               　　{{event.startTime}}
-                  {{event.title}}
+               　　{{event.title}}
+
                 </el-card>
              </el-timeline-item>
           </el-timeline>
