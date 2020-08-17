@@ -21,17 +21,19 @@
           :with-header="false"
           size="70%">
            <h2>{{displayDate}}</h2>
-            <el-table :data="details">
-                <el-table-column property="title" label="Title" width="150"></el-table-column>
-                <el-table-column property="startDateTime" label="startTime" width="150"></el-table-column>
-                <el-table-column property="endDateTime" label="endTime" width="150"></el-table-column>
+            <el-table :data="details" style="width: 100%">
+                <el-table-column property="title" label="Title" width="170px"></el-table-column>
+                <el-table-column property="startDateTime" label="StartTime" width="170px"></el-table-column>
+                <el-table-column property="endDateTime" label="EndTime" width="170px"></el-table-column>
+                <el-table-column property="place" label="Place" width="85px"></el-table-column>
+                <el-table-column property="memo" label="Memo" width="255px"></el-table-column>
                 <el-table-column
                       fixed="right"
                       label="Operations"
-                      width="120">
+                      width="100px">
                       <template slot-scope="scope">
                         <el-button type="text" size="small">Edit</el-button>
-                        <el-button type="text" size="small">Delete</el-button>
+                        <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">Delete</el-button>
                       </template>
                 </el-table-column>
             </el-table>
@@ -67,6 +69,10 @@
           </el-date-picker>
        </el-form-item>
 
+       <el-form-item label="Place">
+        <el-input v-model="createEvent.place"></el-input>
+       </el-form-item>
+
        <el-form-item label="Color">
           <el-select v-model="createEvent.color" placeholder="Select">
            <el-option
@@ -74,8 +80,12 @@
               :key="color.value"
               :label="color.label"
               :value="color.value">
-            </el-option>
+           </el-option>
           </el-select>
+       </el-form-item>
+
+       <el-form-item label="Memo">
+           <el-input type="textarea" v-model="createEvent.memo"></el-input>
        </el-form-item>
 
     <el-form-item label="Share">
@@ -100,7 +110,9 @@ export default {
           title:'',
           startEndTime:[],
           color:'',
-          private:'false'
+          private:'false',
+          place:'',
+          memo:''
         },
         displayDate: '',
         options: [{
