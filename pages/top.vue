@@ -12,7 +12,7 @@
          </p>
     <!-- イベントを表示 -->
          <span v-for="event in events">
-            <el-tag  v-if=" $moment(date).format('YYYY-MM-DD') >= $moment(event.startDateTime).format('YYYY-MM-DD') && $moment(date).format('YYYY-MM-DD') <= $moment(event.endDateTime).format('YYYY-MM-DD') " v-bind:type="event.color"> {{ event.title }} </el-tag>
+            <el-tag  v-if=" $moment(date).format('YYYY-MM-DD') >= $moment(event.startDateTime).format('YYYY-MM-DD') && $moment(date).format('YYYY-MM-DD') <= $moment(event.endDateTime).format('YYYY-MM-DD') " v-bind:type="event.color" size="small"> {{ event.title }} </el-tag>
          </span>
       </div>
     </el-calendar>
@@ -59,7 +59,7 @@
     <h2>Create New Event</h2>
     <el-form ref="form" label-width="140px">
       <el-form-item label="Title">
-        <el-input v-model="createEvent.title"></el-input>
+        <el-input v-model="createEvent.title" maxlength='12' placeholder='12文字以内で入力してください'　></el-input>
       </el-form-item>
 
       <el-form-item label="Start to End Time">
