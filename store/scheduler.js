@@ -36,7 +36,7 @@ export const actions = {
     const startDateTime = createEvent.startEndTime[0]
     const endDateTime = createEvent.startEndTime[1]
     console.log(startDateTime)
-    const allData = {title:createEvent.title,startDateTime:createEvent.startEndTime[0],endDateTime:createEvent.startEndTime[1],color:createEvent.color,private:createEvent.color}
+    const allData = {title:createEvent.title,startDateTime:createEvent.startEndTime[0],endDateTime:createEvent.startEndTime[1],color:createEvent.color,private:createEvent.private,place:createEvent.place,memo:createEvent.memo}
     context.commit('updateEvents',allData)
     console.log('action')
   },
