@@ -10,38 +10,40 @@
              {{ data.day.split('-').slice(2).join('-') }}
             </el-button>
          </p>
-      <!-- イベントを表示 -->
+    <!-- イベントを表示 -->
          <span v-for="event in events">
             <el-tag  v-if=" event.private && $moment(date).format('YYYY-MM-DD') >= $moment(event.startDateTime).format('YYYY-MM-DD') && $moment(date).format('YYYY-MM-DD') <= $moment(event.endDateTime).format('YYYY-MM-DD') " v-bind:type="event.color"> {{ event.title }} </el-tag>
          </span>
-      <!-- 日程の詳細を表示 -->
-        <el-drawer
-          :visible.sync="table1"
-          direction="ltr"
-          :with-header="false"
-          size="70%">
-           <h2>{{displayDate}}</h2>
-            <el-table :data="details" style="width: 100%">
-                <el-table-column property="title" label="Title" width="170px"></el-table-column>
-                <el-table-column property="startDateTime" label="StartTime" width="170px"></el-table-column>
-                <el-table-column property="endDateTime" label="EndTime" width="170px"></el-table-column>
-                <el-table-column property="place" label="Place" width="85px"></el-table-column>
-                <el-table-column property="memo" label="Memo" width="255px"></el-table-column>
-                <el-table-column
-                      fixed="right"
-                      label="Operations"
-                      width="100px">
-                      <template slot-scope="scope">
-                        <el-button type="text" size="small">Edit</el-button>
-                        <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">Delete</el-button>
-                      </template>
-                </el-table-column>
-            </el-table>
-        </el-drawer>
 
          <!-- <nuxt-link to="/date" >detail</nuxt-link> -->
       </div>
     </el-calendar>
+
+  <!-- 日程の詳細を表示 -->
+    <el-drawer
+       :visible.sync="table1"
+       direction="ltr"
+       :with-header="false"
+       size="80%">
+      <h2>{{displayDate}}</h2>
+      <el-table :data="details">
+          <el-table-column property="title" label="Title" width="200"></el-table-column>
+          <el-table-column property="startDateTime" label="StartTime" width="200px"></el-table-column>
+          <el-table-column property="endDateTime" label="EndTime" width="200px"></el-table-column>
+          <el-table-column property="place" label="Place" width="200px"></el-table-column>
+          <el-table-column property="memo" label="Memo" width="300px"></el-table-column>
+          <el-table-column
+                fixed="right"
+                label="Operations"
+                width="100px">
+                <template slot-scope="scope">
+                  <el-button type="text" size="small">Edit</el-button>
+                  <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">Delete</el-button>
+                </template>
+          </el-table-column>
+      </el-table>
+    </el-drawer>
+
 
   <!-- 新規作成ボタン -->
     <el-button type="primary" icon="el-icon-edit" @click="table2 = true" circle></el-button>
@@ -164,5 +166,5 @@ export default {
 <style>
   .is-selected {
       color: #1989FA;
-    }
+   }
 </style>
