@@ -23,8 +23,17 @@
            <h2>{{displayDate}}</h2>
             <el-table :data="details">
                 <el-table-column property="title" label="Title" width="150"></el-table-column>
-                <el-table-column property="startDateTime" label="startTime" width="200"></el-table-column>
-                <el-table-column property="endDateTime" label="endTime"></el-table-column>
+                <el-table-column property="startDateTime" label="startTime" width="150"></el-table-column>
+                <el-table-column property="endDateTime" label="endTime" width="150"></el-table-column>
+                <el-table-column
+                      fixed="right"
+                      label="Operations"
+                      width="120">
+                      <template slot-scope="scope">
+                        <el-button type="text" size="small">Edit</el-button>
+                        <el-button type="text" size="small">Delete</el-button>
+                      </template>
+                </el-table-column>
             </el-table>
         </el-drawer>
 
