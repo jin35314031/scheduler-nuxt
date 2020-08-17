@@ -12,24 +12,31 @@
          </p>
       <!-- イベントを表示 -->
          <span v-for="event in events">
-            <el-tag  v-if=" event.private && $moment(date).format('YYYY-MM-DD') >= $moment(event.startDateTime).format('YYYY-MM-DD') && $moment(date).format('YYYY-MM-DD') <= $moment(event.endDateTime).format('YYYY-MM-DD') " v-bind:type="event.color"> {{ event.title }} {{$moment(event.startDateTime).format('YYYY-MM-DD')}}</el-tag>
+            <el-tag  v-if=" event.private && $moment(date).format('YYYY-MM-DD') >= $moment(event.startDateTime).format('YYYY-MM-DD') && $moment(date).format('YYYY-MM-DD') <= $moment(event.endDateTime).format('YYYY-MM-DD') " v-bind:type="event.color"> {{ event.title }} </el-tag>
          </span>
       <!-- 日程の詳細を表示 -->
         <el-drawer
           :visible.sync="table"
           direction="ltr"
           :with-header="false"
-          size="50%">
+          size="70%">
+      <!-- Timeline Display -->
+      <!--    <h2>{{displayDate}}</h2> -->
+      <!--    <el-timeline v-for="event in events" :key="event.title"> -->
+      <!--       <el-timeline-item placement="top" timestamp=　"$moment(event.startDateTime).format('HH:mm:ss')" v-if=" displayDate >= $moment(event.startDateTime).format('YYYY-MM-DD') && displayDate <= $moment(event.endDateTime).format('YYYY-MM-DD')" > -->
+      <!--          <el-card > -->
+      <!--         　　{{event.title}} -->
+      <!--          </el-card> -->
+      <!--       </el-timeline-item> -->
+      <!--    </el-timeline> -->
+      <!--  </el-drawer> -->
 
-          <h2>{{displayDate}}</h2>
-          <el-timeline v-for="event in events" :key="event.title">
-             <el-timeline-item placement="top" timestamp=　"event.startTime.toString()" v-if=" displayDate >= event.start && displayDate <= event.end" >
-                <el-card >
-               　　{{event.title}}
-
-                </el-card>
-             </el-timeline-item>
-          </el-timeline>
+           <h2>{{displayDate}}</h2>
+            <el-table :data="details()">
+                <el-table-column property="title" label="Title" width="150"></el-table-column>
+                <el-table-column property="startDateTime" label="startTime" width="200"></el-table-column>
+                <el-table-column property="endDateTime" label="endTime"></el-table-column>
+            </el-table>
         </el-drawer>
 
          <!-- <nuxt-link to="/date" >detail</nuxt-link> -->
@@ -60,7 +67,7 @@
           :label="color.label"
           :value="color.value">
         </el-option>
-      </el-select>
+    </el-select>
     <label>share</label>
     <el-switch v-model="createEvent.private"></el-switch>
     <el-button type="info" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">NewEvents</el-button>
@@ -114,8 +121,17 @@ export default {
       console.log(day);
       this.displayDate = day
       return null;
+    },
+     details(displayDate){
+     const moment = require('moment');
+     for(let i = 0 ; i < this.$store.state.scheduler.events.length; i++){
+      if(displayDate >= moment(this.$store.state.scheduler.events[i].startDateTime).format('YYYY-MM-DD') && displayDate <= moment(this.$store.state.scheduler.events[i].endDateTime).format('YYYY-MM-DD')){
+        console.log(this.$store.state.scheduler.events[i]);
+        return this.$store.state.scheduler.events[i];
+      }
+     }
     }
-   }
+  }
 }
 </script>
 
