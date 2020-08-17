@@ -12,10 +12,8 @@
          </p>
     <!-- イベントを表示 -->
          <span v-for="event in events">
-            <el-tag  v-if=" event.private && $moment(date).format('YYYY-MM-DD') >= $moment(event.startDateTime).format('YYYY-MM-DD') && $moment(date).format('YYYY-MM-DD') <= $moment(event.endDateTime).format('YYYY-MM-DD') " v-bind:type="event.color"> {{ event.title }} </el-tag>
+            <el-tag  v-if=" $moment(date).format('YYYY-MM-DD') >= $moment(event.startDateTime).format('YYYY-MM-DD') && $moment(date).format('YYYY-MM-DD') <= $moment(event.endDateTime).format('YYYY-MM-DD') " v-bind:type="event.color"> {{ event.title }} </el-tag>
          </span>
-
-         <!-- <nuxt-link to="/date" >detail</nuxt-link> -->
       </div>
     </el-calendar>
 
@@ -44,15 +42,20 @@
       </el-table>
     </el-drawer>
 
+    <div class="flow">
+          <nuxt-link to="/top"><el-avatar icon="el-icon-user-solid"></el-avatar></nuxt-link>
+          <nuxt-link to="/share"><el-avatar icon="el-icon-s-cooperation"></el-avatar></nuxt-link>
+        <!-- 新規作成ボタン -->
+           <el-button type="primary" icon="el-icon-edit" @click="table2 = true" circle></el-button>
+    </div>
 
-  <!-- 新規作成ボタン -->
-    <el-button type="primary" icon="el-icon-edit" @click="table2 = true" circle></el-button>
+  <!-- 新規作成フォーム -->
     <el-drawer
               :visible.sync="table2"
               direction="rtl"
               :with-header="false"
               size="70%">
-  <!-- イベント追加 -->
+    <!-- イベント追加 -->
     <h2>Create New Event</h2>
     <el-form ref="form" label-width="140px">
       <el-form-item label="Title">
@@ -91,7 +94,7 @@
        </el-form-item>
 
     <el-form-item label="Share">
-      <el-switch v-model="createEvent.private"></el-switch>
+      <el-switch v-model="createEvent.share"></el-switch>
     </el-form-item>
 
     <el-form-item>
@@ -112,7 +115,7 @@ export default {
           title:'',
           startEndTime:[],
           color:'',
-          private:'false',
+          share:'false',
           place:'',
           memo:''
         },
@@ -166,5 +169,9 @@ export default {
 <style>
   .is-selected {
       color: #1989FA;
+   }
+   .flow {
+       display: flex;
+       justify-content: space-around;
    }
 </style>
