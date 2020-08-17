@@ -122,15 +122,16 @@ export default {
       this.displayDate = day
       return null;
     },
-     details(displayDate){
-     const moment = require('moment');
-     for(let i = 0 ; i < this.$store.state.scheduler.events.length; i++){
-      if(displayDate >= moment(this.$store.state.scheduler.events[i].startDateTime).format('YYYY-MM-DD') && displayDate <= moment(this.$store.state.scheduler.events[i].endDateTime).format('YYYY-MM-DD')){
-        console.log(this.$store.state.scheduler.events[i]);
-        return this.$store.state.scheduler.events[i];
-      }
+   details(displayDate){
+       const moment = require('moment');
+       console.log(this.displayDate);
+       console.log(moment(this.$store.state.scheduler.events[0].startDateTime).format('YYYY-MM-DD'))
+       for(let i = 0 ; i < this.$store.state.scheduler.events.length; i++){
+       if(this.displayDate >= moment(this.$store.state.scheduler.events[i].startDateTime).format('YYYY-MM-DD') && this.displayDate <= moment(this.$store.state.scheduler.events[i].endDateTime).format('YYYY-MM-DD')){
+           return this.$store.state.scheduler.events[i];
+          }
+        }
      }
-    }
   }
 }
 </script>
