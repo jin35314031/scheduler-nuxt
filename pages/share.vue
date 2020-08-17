@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
   data:function(){
       return {
@@ -116,7 +117,9 @@ export default {
           return this.$store.state.scheduler.events;
          },
         details(){
-              return this.$store.state.scheduler.events.filter(item => item.color === 'success');
+              let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDateTime).format('YYYY-MM-DD'));
+              let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDateTime).format('YYYY-MM-DD'))
+              return eventList;
          }
       },
     methods:{
