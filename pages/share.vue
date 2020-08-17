@@ -5,7 +5,7 @@
        slot="dateCell"
        slot-scope="{ date,data }">
       <!-- 日付を表示 -->
-         <p :class="data.isSelected ? 'is-selected' : ''" @click="table = true;clickDay(data.day)" style="width:100%">
+         <p :class="data.isSelected ? 'is-selected' : ''" @click="table1 = true;clickDay(data.day)" style="width:100%">
             <el-button type="" size="mini" circle>
              {{ data.day.split('-').slice(2).join('-') }}
             </el-button>
@@ -16,7 +16,7 @@
          </span>
       <!-- 日程の詳細を表示 -->
         <el-drawer
-          :visible.sync="table"
+          :visible.sync="table1"
           direction="ltr"
           :with-header="false"
           size="70%">
@@ -43,35 +43,54 @@
       </div>
     </el-calendar>
 
+  <!-- 新規作成ボタン -->
+    <el-button type="primary" icon="el-icon-edit" @click="table2 = true" circle></el-button>
+    <el-drawer
+              :visible.sync="table2"
+              direction="rtl"
+              :with-header="false"
+              size="70%">
+    <!-- イベント追加 -->
+    <el-row>
+      <label>title</label>
+      <input type="text" v-model="createEvent.title"></input>
+    </el-row>
 
-  <!-- イベント追加 -->
-    <label>title</label>
-    <input type="text" v-model="createEvent.title"></input>
+    <el-row>
+      <span class="demonstration">Start to End Time</span>
+          <el-date-picker
+            v-model="createEvent.startEndTime"
+            type="datetimerange"
+            start-placeholder="Start Date"
+            end-placeholder="End Date"
+            :default-time="['12:00:00']"
+            format="yyyy/MM/dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss">
+          </el-date-picker>
+    </el-row>
 
-    <span class="demonstration">Start to End Time</span>
-        <el-date-picker
-          v-model="createEvent.startEndTime"
-          type="datetimerange"
-          start-placeholder="Start Date"
-          end-placeholder="End Date"
-          :default-time="['12:00:00']"
-          format="yyyy/MM/dd HH:mm:ss"
-          value-format="yyyy-MM-dd HH:mm:ss">
-        </el-date-picker>
+    <el-row>
+      <label>color</label>
+      <el-select v-model="createEvent.color" placeholder="Select">
+          <el-option
+            v-for="color in options"
+            :key="color.value"
+            :label="color.label"
+            :value="color.value">
+          </el-option>
+      </el-select>
+    </el-row>
 
-   <label>color</label>
-    <el-select v-model="createEvent.color" placeholder="Select">
-        <el-option
-          v-for="color in options"
-          :key="color.value"
-          :label="color.label"
-          :value="color.value">
-        </el-option>
-    </el-select>
-    <label>share</label>
-    <el-switch v-model="createEvent.private"></el-switch>
-    <el-button type="info" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">NewEvents</el-button>
-    {{createEvent.startEndTime}}
+    <el-row>
+      <label>share</label>
+      <el-switch v-model="createEvent.private"></el-switch>
+    </el-row>
+
+    <el-row>
+      <el-button type="info" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">NewEvents</el-button>
+    </el-row>
+  </el-drawer>
+
   </div>
 </template>
 
@@ -108,7 +127,8 @@ export default {
                     return time.getTime() > Date.now();
                   }
         },
-        table: false,
+        table1: false,
+        table2: false,
 
       }
     },
