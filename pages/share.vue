@@ -145,6 +145,11 @@ export default {
         table2: false,
       }
     },
+    middleware({ store, redirect }) {
+      if(store.$auth.loggedIn) {
+        redirect('/top');
+      }
+    },
     computed: {
         events() {
           return this.$store.state.scheduler.events;
