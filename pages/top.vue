@@ -100,9 +100,11 @@
     <el-form-item>
       <el-button type="primary" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)" round>NewEvents</el-button>
     </el-form-item>
+
    </el-form>
   </el-drawer>
-
+    <el-button type="primary" v-on:click="logout">Logout</el-button>
+    {{user}}
   </div>
 </template>
 
@@ -145,8 +147,16 @@ export default {
         table2: false,
       }
     },
+    middleware({ store, redirect }) {
+      if(!store.$auth.loggedIn) {
+        redirect('/login');
+      }
+    },
     computed: {
-        events() {
+        user() {
+          return this.$auth.user;
+        },
+          events() {
           return this.$store.state.scheduler.events;
          },
         details(){
@@ -156,6 +166,9 @@ export default {
          }
       },
     methods:{
+      logout() {
+        this.$auth.logout();
+      },
       clickDay(day){
       console.log(day);
       this.displayDate = day
