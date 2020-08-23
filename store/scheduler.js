@@ -32,21 +32,26 @@ export const mutations = {
 }
 
 export const actions = {
-  createEventsAction(context,createEvent){
-    console.log(createEvent)
-    const startDate = createEvent.startDate[0]
-    const endDate = createEvent.startEndDate[1]
-    console.log(startDate)
-    const allData = {title:createEvent.title,startDateTime:createEvent.startEndDate[0],endDateTime:createEvent.startEndDate[1],color:createEvent.color,share:createEvent.share,place:createEvent.place,memo:createEvent.memo}
-    context.commit('updateEvents',allData)
-    console.log('action')
-  },
-  deleteEventsAction(context,deleteEvent){
-    console.log(deleteEvent)
-  },
   async getEventsAction (context) {
     const payload = await this.$axios.get('/api/plan')
     console.log(payload.data)
     context.commit('updateEvents', payload.data)
-  }
+  },
+  async createEventsAction({commit,dispatch},{createEvent,userId}){
+    console.log('createEvent:::::::')
+    console.log(createEvent)
+    console.log('userId:::::::')
+    console.log(userId)
+    const startDate = createEvent.startEndTime[0]
+    const endDate = createEvent.startEndTime[1]
+    console.log(startDate)
+    const allData = {loginId:userId,title:createEvent.title,startDate:startDate,endDate:endDate,label:createEvent.color,share:createEvent.share,place:createEvent.place,body:createEvent.body}
+    console.log(allData)
+    await this.$axios.post('/api/plan',allData)
+    dispatch('getEventsAction')
+  },
+  deleteEventsAction(context,deleteEvent){
+    console.log(deleteEvent)
+  },
+
 }

@@ -10,13 +10,18 @@
 <!--             {{ data.day.split('-').slice(2).join('-') }}-->
 <!--            </el-button>-->
 <!--         </p>-->
+        <p  @click="table1 = true;clickDay(data.day)" style="width:100%">
+          <el-button type="" size="mini" circle>
+            {{ $moment(date).format('DD')}}
+          </el-button>
+        </p>
     <!-- イベントを表示 -->
          <span v-for="event in events">
-           <p  @click="table1 = true;clickDay(date)" style="width:100%">
-            <el-button type="" size="mini" circle>
-             {{ $moment(date).format('DD')}}
-            </el-button>
-         </p>
+<!--           <p  @click="table1 = true;clickDay(date)" style="width:100%">-->
+<!--            <el-button type="" size="mini" circle>-->
+<!--             {{ $moment(date).format('DD')}}-->
+<!--            </el-button>-->
+<!--         </p>-->
             <!-- <el-tag  v-if=" $moment(date).format('yyyy-MM-dd') >= $moment(event.startDateTime).format('yyyy-MM-dd') && $moment(date).format('yyyy-MM-dd') <= $moment(event.endDateTime).format('yyyy-MM-dd') " v-bind:type="event.color" size="small"> {{ event.title }} </el-tag> -->
             <template v-if = "$moment(date).format('YYYY-MM-DD') >= $moment(event.startDate).format('YYYY-MM-DD')">
               <template v-if ="$moment(date).format('YYYY-MM-DD') <= $moment(event.endDate).format('YYYY-MM-DD')">
@@ -103,7 +108,7 @@
        </el-form-item>
 
        <el-form-item label="Memo">
-           <el-input type="textarea" v-model="createEvent.memo"></el-input>
+           <el-input type="textarea" v-model="createEvent.body"></el-input>
        </el-form-item>
 
     <el-form-item label="Share">
@@ -111,7 +116,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)" round>NewEvents</el-button>
+      <el-button type="primary" v-on:click="$store.dispatch('scheduler/createEventsAction',{createEvent:createEvent,userId:user.loginId})" round>NewEvents</el-button>
     </el-form-item>
 
    </el-form>
@@ -132,7 +137,7 @@ export default {
           color:'',
           share:'false',
           place:'',
-          memo:''
+          body:'',
         },
         displayDate: '',
         options: [{
@@ -158,7 +163,7 @@ export default {
         },
         table1: false,
         table2: false,
-        tempList:[]
+        tempList:[],
       }
     },
     mounted: function () {
@@ -190,7 +195,7 @@ export default {
       },
       clickDay(day){
       console.log(day);
-      this.displayDate = day
+      this.displayDate = moment(day).format('YYYY-MM-DD')
       return null;
     },
 

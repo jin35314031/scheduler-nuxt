@@ -146,8 +146,8 @@ export default {
       }
     },
     middleware({ store, redirect }) {
-      if(store.$auth.loggedIn) {
-        redirect('/top');
+      if(!store.$auth.loggedIn) {
+        redirect('/login');
       }
     },
     computed: {
