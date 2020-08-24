@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 
 export const state = () => ({
-  events: ''
+  events: []
     // {
     //   title:'報告会',
     //   startDateTime:'2020-08-22 14:00',
@@ -40,11 +40,11 @@ export const actions = {
   async createEventsAction({commit,dispatch},{createEvent,userId}){
     console.log('createEvent:::::::')
     console.log(createEvent)
-    console.log('userId:::::::')
-    console.log(userId)
     const startDate = createEvent.startEndTime[0]
     const endDate = createEvent.startEndTime[1]
     console.log(startDate)
+    console.log('endDate::::::::')
+    console.log(endDate)
     const allData = {loginId:userId,title:createEvent.title,startDate:startDate,endDate:endDate,label:createEvent.color,share:createEvent.share,place:createEvent.place,body:createEvent.body}
     console.log(allData)
     await this.$axios.post('/api/plan',allData)

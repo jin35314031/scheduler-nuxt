@@ -184,7 +184,7 @@ export default {
           return this.$store.state.scheduler.events;
          },
         details(){
-          // let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
+          //let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
           // let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
           //
           console.log('this.$store.state.scheduler.events:::::::')
@@ -193,19 +193,18 @@ export default {
           console.log(this.displayDate)
           let array = new Array();
           array = this.$store.state.scheduler.events;
-          console.log('array::::::::::::::::')
-          console.log(array)
-           let eventStartList = [this.$store.state.scheduler.events].filter(item => (this.displayDate >= moment(item.startDate).format('YYYY-MM-DD')) && (this.displayDate <= moment(item.endDate).format('YYYY-MM-DD')))
-           //let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
+          let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
+          //let eventStartList = [this.$store.state.scheduler.events].filter(item => (this.displayDate >= moment(item.startDate).format('YYYY-MM-DD')) && (this.displayDate <= moment(item.endDate).format('YYYY-MM-DD')))
+          let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
           //array = eventStartList[0];
-          console.log('array::::::::::')
-          console.log(array)
-          let eventList = [array].filter(item => this.displayDate <= moment(item.endDate).format('YYYY-MM-DD'));
-          //array = eventList[0];
-          console.log('eventList::::::::::')
-          console.log(eventList)
-          return array;
 
+          ///let eventList = array.filter(item => this.displayDate <= moment(item.endDate).format('YYYY-MM-DD'));
+          console.log('eventStartList::::::::::')
+          console.log(eventList)
+          //array = eventStartList[0];
+           console.log('array::::::::::')
+           console.log(array)
+          return eventList;
          }
       },
     methods:{
