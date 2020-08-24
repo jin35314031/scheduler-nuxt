@@ -1,25 +1,26 @@
 import Vuex from 'vuex'
+import moment from "moment";
 
 export const state = () => ({
-  events: ''
-    // {
-    //   title:'報告会',
-    //   startDateTime:'2020-08-22 14:00',
-    //   endDateTime:'2020-08-28 00:00',
-    //   color:'success',
-    //   share:false,
-    //   place:'第一会議室',
-    //   memo:'レポート提出'
-    // },
-    // {
-    //   title:'出勤日',
-    //   startDateTime:'2020-08-14 08:00',
-    //   endDateTime:'2020-08-16 18:00',
-    //   color:'warning',
-    //   share:true,
-    //   place:'オフィス',
-    //   memo:'８時半出勤'
-    // }
+  events:
+    [{
+      title:'報告会',
+      startDate:'2000-01-01 14:00',
+      endDate:'2000-01-01 14:00',
+      color:'success',
+      share:false,
+      place:'home',
+      memo:'memo'
+    },
+    {
+      title:'報告会',
+      startDate:'2000-01-02 14:00',
+      endDate:'2000-01-02 14:00',
+      color:'success',
+      share:false,
+      place:'home',
+      memo:'memo'
+    }]
 })
 
 export const mutations = {
@@ -53,5 +54,31 @@ export const actions = {
   deleteEventsAction(context,deleteEvent){
     console.log(deleteEvent)
   },
+}
 
+export const getters = {
+  getTest: (state) => (displayDate) => {
+    let events = state.events
+    console.log('発火:::::'+ displayDate)
+
+    let tempData = new Array();
+
+    for( let i=0; i<events.length; i++) {
+
+      let formatStartDate = moment(events[i].startDate).format('YYYY-MM-DD')
+      let formatEndDate = moment(events[i].endDate).format('YYYY-MM-DD')
+
+      let StartSameOrBefore = moment(formatStartDate).isSameOrBefore(moment(displayDate))
+      console.log('StartSameOrBefore::::::' + StartSameOrBefore)
+      let EndSameOrAfter = moment(formatEndDate).isSameOrAfter(moment(displayDate))
+      console.log('EndSameOrAfter::::::' + EndSameOrAfter)
+
+      if (StartSameOrBefore && EndSameOrAfter) {
+        tempData.push(events[i])
+      }
+    }
+    console.log('終了:::::')
+    console.log(tempData)
+    return  tempData
+  }
 }

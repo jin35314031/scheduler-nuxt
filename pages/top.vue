@@ -35,6 +35,8 @@
 
 
 
+
+
   <!-- 日程の詳細を表示 -->
     <el-drawer
        :visible.sync="table1"
@@ -42,8 +44,8 @@
        :with-header="false"
        size="80%">
       <h2>{{displayDate}}</h2>
-      {{details}}
-      <el-table :data="details">
+
+      <el-table :data="this.getTest(this.displayDate)">
           <el-table-column property="title" label="Title" width="200"></el-table-column>
           <el-table-column property="startDate" label="StartTime" width="200px"></el-table-column>
           <el-table-column property="endDate" label="EndTime" width="200px"></el-table-column>
@@ -128,6 +130,7 @@
 </template>
 
 <script>
+  import { mapGetters, mapMutations } from 'vuex'
 import moment from 'moment';
 export default {
   data:function(){
@@ -140,7 +143,7 @@ export default {
           place:'',
           body:'',
         },
-        displayDate: '',
+        displayDate: '2020-01-01',
         options: [{
                   value: '',
                   label: 'blue'
@@ -177,35 +180,16 @@ export default {
       }
     },
     computed: {
+      ...mapGetters('scheduler',[
+        'getTest'
+      ]),
+
+
         user() {
           return this.$auth.user;
         },
           events() {
           return this.$store.state.scheduler.events;
-         },
-        details(){
-          // let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
-          // let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
-          //
-          console.log('this.$store.state.scheduler.events:::::::')
-          console.log(this.$store.state.scheduler.events)
-          console.log('this.displayDate::::::::::::::::')
-          console.log(this.displayDate)
-          let array = new Array();
-          array = this.$store.state.scheduler.events;
-          console.log('array::::::::::::::::')
-          console.log(array)
-           let eventStartList = [this.$store.state.scheduler.events].filter(item => (this.displayDate >= moment(item.startDate).format('YYYY-MM-DD')) && (this.displayDate <= moment(item.endDate).format('YYYY-MM-DD')))
-           //let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
-          //array = eventStartList[0];
-          console.log('array::::::::::')
-          console.log(array)
-          let eventList = [array].filter(item => this.displayDate <= moment(item.endDate).format('YYYY-MM-DD'));
-          //array = eventList[0];
-          console.log('eventList::::::::::')
-          console.log(eventList)
-          return array;
-
          }
       },
     methods:{
