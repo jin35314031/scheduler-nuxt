@@ -42,6 +42,7 @@
        :with-header="false"
        size="80%">
       <h2>{{displayDate}}</h2>
+      {{details}}
       <el-table :data="details">
           <el-table-column property="title" label="Title" width="200"></el-table-column>
           <el-table-column property="startDate" label="StartTime" width="200px"></el-table-column>
@@ -190,13 +191,20 @@ export default {
           console.log(this.$store.state.scheduler.events)
           console.log('this.displayDate::::::::::::::::')
           console.log(this.displayDate)
-          let eventStartList = [this.$store.state.scheduler.events].filter(item => this.displayDate >= moment(item.startDate).format('YYYY-MM-DD'));
-          console.log('eventStartList::::::::::')
-          console.log(eventStartList)
-          let eventList = eventStartList.filter(item => this.displayDate <= moment(item.endDate).format('YYYY-MM-DD'))
+          let array = new Array();
+          array = this.$store.state.scheduler.events;
+          console.log('array::::::::::::::::')
+          console.log(array)
+           let eventStartList = [this.$store.state.scheduler.events].filter(item => (this.displayDate >= moment(item.startDate).format('YYYY-MM-DD')) && (this.displayDate <= moment(item.endDate).format('YYYY-MM-DD')))
+           //let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
+          //array = eventStartList[0];
+          console.log('array::::::::::')
+          console.log(array)
+          let eventList = [array].filter(item => this.displayDate <= moment(item.endDate).format('YYYY-MM-DD'));
+          //array = eventList[0];
           console.log('eventList::::::::::')
           console.log(eventList)
-          return eventStartList;
+          return array;
 
          }
       },
