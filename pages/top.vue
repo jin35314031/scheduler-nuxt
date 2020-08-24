@@ -25,7 +25,7 @@
             <!-- <el-tag  v-if=" $moment(date).format('yyyy-MM-dd') >= $moment(event.startDateTime).format('yyyy-MM-dd') && $moment(date).format('yyyy-MM-dd') <= $moment(event.endDateTime).format('yyyy-MM-dd') " v-bind:type="event.color" size="small"> {{ event.title }} </el-tag> -->
             <template v-if = "$moment(date).format('YYYY-MM-DD') >= $moment(event.startDate).format('YYYY-MM-DD')">
               <template v-if ="$moment(date).format('YYYY-MM-DD') <= $moment(event.endDate).format('YYYY-MM-DD')">
-                <el-tag v-bind:type="event.color" size="small">{{ event.title }} </el-tag>
+                <el-tag v-bind:type="event.label" size="small">{{ event.title }} </el-tag>
               </template>
             </template>
          </span>
