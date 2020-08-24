@@ -55,7 +55,7 @@
                 width="100px">
                 <template slot-scope="scope">
                   <el-button type="text" size="small">Edit</el-button>
-                  <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/createEventsAction',createEvent)">Delete</el-button>
+                  <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/deleteEventsAction',scope.row)">Delete</el-button>
                 </template>
           </el-table-column>
       </el-table>
