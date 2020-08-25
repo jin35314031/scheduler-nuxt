@@ -110,7 +110,7 @@
 
       </el-form>
     </el-drawer>
-    <el-button type="primary" v-on:click="logout">Logout</el-button>
+    <el-button type="primary" v-on:click="logout" class="button" >Logout</el-button>
   </div>
 </template>
 
@@ -201,7 +201,9 @@
     display: flex;
     justify-content: space-around;
   }
-  [v-cloak]{
-    display:none;
+  .button{
+    float:right;
+    margin-right:30px;
   }
+
 </style>
