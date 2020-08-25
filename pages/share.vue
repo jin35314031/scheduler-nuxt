@@ -5,11 +5,6 @@
         slot="dateCell"
         slot-scope="{ date,data }">
         <!-- 日付を表示 -->
-        <!--         <p  @click="table1 = true;clickDay(data.day)" style="width:100%">-->
-        <!--            <el-button type="" size="mini" circle>-->
-        <!--             {{ data.day.split('-').slice(2).join('-') }}-->
-        <!--            </el-button>-->
-        <!--         </p>-->
         <p  @click="table1 = true;clickDay(data.day)" style="width:100%">
           <el-button type="" size="mini" circle>
             {{ $moment(date).format('DD')}}
@@ -17,15 +12,11 @@
         </p>
         <!-- イベントを表示 -->
         <span v-for="event in events">
-<!--           <p  @click="table1 = true;clickDay(date)" style="width:100%">-->
-          <!--            <el-button type="" size="mini" circle>-->
-          <!--             {{ $moment(date).format('DD')}}-->
-          <!--            </el-button>-->
-          <!--         </p>-->
-          <!-- <el-tag  v-if=" $moment(date).format('yyyy-MM-dd') >= $moment(event.startDateTime).format('yyyy-MM-dd') && $moment(date).format('yyyy-MM-dd') <= $moment(event.endDateTime).format('yyyy-MM-dd') " v-bind:type="event.color" size="small"> {{ event.title }} </el-tag> -->
-            <template v-if = "$moment(date).format('YYYY-MM-DD') >= $moment(event.startDate).format('YYYY-MM-DD')">
-              <template v-if ="$moment(date).format('YYYY-MM-DD') <= $moment(event.endDate).format('YYYY-MM-DD')">
-                <el-tag v-bind:type="event.label" size="small">{{ event.title }} </el-tag>
+            <template v-if="event.share">
+              <template v-if = "$moment(date).format('YYYY-MM-DD') >= $moment(event.startDate).format('YYYY-MM-DD')">
+                <template v-if ="$moment(date).format('YYYY-MM-DD') <= $moment(event.endDate).format('YYYY-MM-DD')">
+                 <el-tag v-bind:type="event.label" size="small" v-cloak>{{ event.title }} </el-tag>
+                </template>
               </template>
             </template>
          </span>
@@ -47,14 +38,14 @@
         <el-table-column property="endDate" label="EndTime" width="200px"></el-table-column>
         <el-table-column property="place" label="Place" width="200px"></el-table-column>
         <el-table-column property="body" label="Memo" width="300px"></el-table-column>
-        <el-table-column
-          fixed="right"
-          label="Operations"
-          width="100px">
-          <template slot-scope="scope">
-            <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/deleteEventsAction',scope.row)">Delete</el-button>
-          </template>
-        </el-table-column>
+<!--        <el-table-column-->
+<!--          fixed="right"-->
+<!--          label="Operations"-->
+<!--          width="100px">-->
+<!--          <template slot-scope="scope">-->
+<!--            <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/deleteEventsAction',scope.row)">Delete</el-button>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
       </el-table>
     </el-drawer>
 
@@ -182,27 +173,10 @@
         return this.$store.state.scheduler.events;
       },
       details(){
-        //let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
-        // let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
-        //
-        console.log('this.$store.state.scheduler.events:::::::')
-        console.log(this.$store.state.scheduler.events)
-        console.log('this.displayDate::::::::::::::::')
-        console.log(this.displayDate)
-        let array = new Array();
-        array = this.$store.state.scheduler.events;
         let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
-        //let eventStartList = [this.$store.state.scheduler.events].filter(item => (this.displayDate >= moment(item.startDate).format('YYYY-MM-DD')) && (this.displayDate <= moment(item.endDate).format('YYYY-MM-DD')))
         let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
-        //array = eventStartList[0];
-
-        ///let eventList = array.filter(item => this.displayDate <= moment(item.endDate).format('YYYY-MM-DD'));
-        console.log('eventStartList::::::::::')
-        console.log(eventList)
-        //array = eventStartList[0];
-        console.log('array::::::::::')
-        console.log(array)
-        return eventList;
+        let eventOrgList = eventList.filter(item => item.share == true)
+        return eventOrgList;
       }
     },
     methods:{
@@ -226,5 +200,8 @@
   .flow {
     display: flex;
     justify-content: space-around;
+  }
+  [v-cloak]{
+    display:none;
   }
 </style>
