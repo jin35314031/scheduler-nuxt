@@ -155,9 +155,7 @@
       }
     },
     mounted: function () {
-      console.log('mount');
       let user = this.$auth.user;
-      console.log(user.orgId)
       this.$store.dispatch('scheduler/getOrgEventsAction',user.orgId);
     },
     middleware({ store, redirect }) {
@@ -184,7 +182,6 @@
         this.$auth.logout();
       },
       clickDay(day){
-        console.log(day);
         this.displayDate = moment(day).format('YYYY-MM-DD')
         return null;
       },
@@ -194,9 +191,6 @@
 </script>
 
 <style>
-  .is-selected {
-    color: #1989FA;
-  }
   .flow {
     display: flex;
     justify-content: space-around;

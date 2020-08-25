@@ -5,24 +5,13 @@
        slot="dateCell"
        slot-scope="{ date,data }">
       <!-- 日付を表示 -->
-<!--         <p  @click="table1 = true;clickDay(data.day)" style="width:100%">-->
-<!--            <el-button type="" size="mini" circle>-->
-<!--             {{ data.day.split('-').slice(2).join('-') }}-->
-<!--            </el-button>-->
-<!--         </p>-->
-        <p  @click="table1 = true;clickDay(data.day)" style="width:100%">
+     <p  @click="table1 = true;clickDay(data.day)" style="width:100%">
           <el-button type="" size="mini" circle>
             {{ $moment(date).format('DD')}}
           </el-button>
         </p>
     <!-- イベントを表示 -->
          <span v-for="event in events">
-<!--           <p  @click="table1 = true;clickDay(date)" style="width:100%">-->
-<!--            <el-button type="" size="mini" circle>-->
-<!--             {{ $moment(date).format('DD')}}-->
-<!--            </el-button>-->
-<!--         </p>-->
-            <!-- <el-tag  v-if=" $moment(date).format('yyyy-MM-dd') >= $moment(event.startDateTime).format('yyyy-MM-dd') && $moment(date).format('yyyy-MM-dd') <= $moment(event.endDateTime).format('yyyy-MM-dd') " v-bind:type="event.color" size="small"> {{ event.title }} </el-tag> -->
             <template v-if = "$moment(date).format('YYYY-MM-DD') >= $moment(event.startDate).format('YYYY-MM-DD')">
               <template v-if ="$moment(date).format('YYYY-MM-DD') <= $moment(event.endDate).format('YYYY-MM-DD')">
                 <el-tag v-bind:type="event.label" size="small">{{ event.title }} </el-tag>
@@ -164,7 +153,6 @@ export default {
       }
     },
     mounted: function () {
-            console.log('mount');
             this.$store.dispatch('scheduler/getEventsAction');
           },
     middleware({ store, redirect }) {
@@ -180,26 +168,8 @@ export default {
           return this.$store.state.scheduler.events;
          },
         details(){
-          //let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
-          // let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
-          //
-          console.log('this.$store.state.scheduler.events:::::::')
-          console.log(this.$store.state.scheduler.events)
-          console.log('this.displayDate::::::::::::::::')
-          console.log(this.displayDate)
-          let array = new Array();
-          array = this.$store.state.scheduler.events;
           let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
-          //let eventStartList = [this.$store.state.scheduler.events].filter(item => (this.displayDate >= moment(item.startDate).format('YYYY-MM-DD')) && (this.displayDate <= moment(item.endDate).format('YYYY-MM-DD')))
           let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
-          //array = eventStartList[0];
-
-          ///let eventList = array.filter(item => this.displayDate <= moment(item.endDate).format('YYYY-MM-DD'));
-          console.log('eventStartList::::::::::')
-          console.log(eventList)
-          //array = eventStartList[0];
-           console.log('array::::::::::')
-           console.log(array)
           return eventList;
          }
       },
@@ -208,7 +178,6 @@ export default {
         this.$auth.logout();
       },
       clickDay(day){
-      console.log(day);
       this.displayDate = moment(day).format('YYYY-MM-DD')
       return null;
     },
@@ -218,9 +187,7 @@ export default {
 </script>
 
 <style>
-  .is-selected {
-      color: #1989FA;
-   }
+
    .flow {
        display: flex;
        justify-content: space-around;
