@@ -31,7 +31,6 @@
          </span>
       </div>
     </el-calendar>
-    {{$store.state.scheduler.events}}
 
 
 
@@ -42,7 +41,6 @@
        :with-header="false"
        size="80%">
       <h2>{{displayDate}}</h2>
-      {{details}}
       <el-table :data="details">
           <el-table-column property="title" label="Title" width="200"></el-table-column>
           <el-table-column property="startDate" label="StartTime" width="200px"></el-table-column>
@@ -54,7 +52,6 @@
                 label="Operations"
                 width="100px">
                 <template slot-scope="scope">
-                  <el-button type="text" size="small">Edit</el-button>
                   <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/deleteEventsAction',scope.row)">Delete</el-button>
                 </template>
           </el-table-column>
@@ -123,7 +120,6 @@
    </el-form>
   </el-drawer>
     <el-button type="primary" v-on:click="logout">Logout</el-button>
-    {{user}}
   </div>
 </template>
 
