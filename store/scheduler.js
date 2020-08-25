@@ -53,7 +53,7 @@ export const actions = {
   async deleteEventsAction({commit,dispatch},deleteEvent){
     console.log('deleteEvent:::::::')
     console.log(deleteEvent)
-    await this.$axios.delete('/api/plan',deleteEvent)
+    await this.$axios.post('/api/del-plan',deleteEvent)
     dispatch('getEventsAction')
   },
 
