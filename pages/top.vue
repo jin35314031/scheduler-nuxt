@@ -41,6 +41,7 @@
                 label="Operations"
                 width="100px">
                 <template slot-scope="scope">
+                  <el-button type="text" size="small" @click="table2 = false;table3 = true;updateEvent(scope.row)">Edit</el-button>
                   <el-button type="text" size="small" v-on:click="$store.dispatch('scheduler/deleteEventsAction',scope.row)">Delete</el-button>
                 </template>
           </el-table-column>
@@ -105,10 +106,64 @@
     <el-form-item>
       <el-button type="primary" v-on:click="$store.dispatch('scheduler/createEventsAction',{createEvent:createEvent,userId:user.loginId})" round>NewEvents</el-button>
     </el-form-item>
-
    </el-form>
   </el-drawer>
     <el-button type="primary" v-on:click="logout" class="button">Logout</el-button>
+
+    <!-- 編集画面 -->
+    <el-drawer
+      :visible.sync="table3"
+      direction="ltr"
+      :with-header="false"
+      size="70%">
+      <!-- イベント変更 -->
+      <h2>Edit Event</h2>{{updateEventData}}
+      <el-form ref="form" label-width="140px">
+        <el-form-item label="Title">
+          <el-input v-model="updateEventData.title" maxlength='12' placeholder='12文字以内で入力してください'　></el-input>
+        </el-form-item>
+
+        <el-form-item label="Start to End Time">
+          <el-date-picker
+            v-model="updateEventData.startEndTime"
+            type="datetimerange"
+            start-placeholder="Start Date"
+            end-placeholder="End Date"
+            :default-time="['12:00:00']"
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss">
+          </el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="Place">
+          <el-input v-model="updateEventData.place"></el-input>
+        </el-form-item>
+
+        <el-form-item label="Color">
+          <el-select v-model="updateEventData.color" placeholder="Select">
+            <el-option
+              v-for="color in options"
+              :key="color.value"
+              :label="color.label"
+              :value="color.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="Memo">
+          <el-input type="textarea" v-model="updateEventData.body"></el-input>
+        </el-form-item>
+
+        <el-form-item label="Share">
+          <el-switch v-model="updateEventData.share"></el-switch>
+        </el-form-item>
+
+        <el-form-item>
+<!--          <el-button type="primary" v-on:click="$store.dispatch('scheduler/updateEventsAction',{createEvent:createEvent,userId:user.loginId})" round>NewEvents</el-button>-->
+        </el-form-item>
+
+      </el-form>
+    </el-drawer>
   </div>
 </template>
 
@@ -149,7 +204,9 @@ export default {
         },
         table1: false,
         table2: false,
+        table3:false,
         tempList:[],
+        updateEventData:{}
       }
     },
     mounted: function () {
@@ -181,7 +238,10 @@ export default {
       this.displayDate = moment(day).format('YYYY-MM-DD')
       return null;
     },
-
+      updateEvent(event){
+        this.updateEventData = event;
+        event.startEndTime = [event.startDate,event.endDate];
+      }
   }
 }
 </script>

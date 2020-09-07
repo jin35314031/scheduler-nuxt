@@ -31,8 +31,12 @@ export const actions = {
     dispatch('getEventsAction')
   },
   async deleteEventsAction({commit,dispatch},deleteEvent){
-
     await this.$axios.post('/api/del-plan',deleteEvent)
+    dispatch('getEventsAction')
+  },
+
+  async UpdateEventsAction({commit,dispatch},updateEvent){
+    await this.$axios.post('/api/update-plan',updateEvent)
     dispatch('getEventsAction')
   },
 
