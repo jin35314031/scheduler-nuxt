@@ -140,7 +140,7 @@
         </el-form-item>
 
         <el-form-item label="Color">
-          <el-select v-model="updateEventData.color" placeholder="Select">
+          <el-select v-model="updateEventData.label" placeholder="Select">
             <el-option
               v-for="color in options"
               :key="color.value"
@@ -159,7 +159,7 @@
         </el-form-item>
 
         <el-form-item>
-<!--          <el-button type="primary" v-on:click="$store.dispatch('scheduler/updateEventsAction',{createEvent:createEvent,userId:user.loginId})" round>NewEvents</el-button>-->
+          <el-button type="primary" v-on:click="$store.dispatch('scheduler/updateEventsAction',updateEventData)" round>Edit Events</el-button>
         </el-form-item>
 
       </el-form>
