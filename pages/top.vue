@@ -108,7 +108,7 @@
     </el-form-item>
    </el-form>
   </el-drawer>
-    <el-button type="primary" v-on:click="logout" class="button">Logout</el-button>
+    <el-button type="success" v-on:click="logout" class="button">Logout</el-button>
 
     <!-- 編集画面 -->
     <el-drawer
@@ -117,7 +117,7 @@
       :with-header="false"
       size="70%">
       <!-- イベント変更 -->
-      <h2>Edit Event</h2>{{updateEventData}}
+      <h2>Edit Event</h2>
       <el-form ref="form" label-width="140px">
         <el-form-item label="Title">
           <el-input v-model="updateEventData.title" maxlength='12' placeholder='12文字以内で入力してください'　></el-input>
@@ -228,7 +228,10 @@ export default {
           let eventStartList = this.$store.state.scheduler.events.filter(item => moment(this.displayDate).format('YYYY-MM-DD') >= moment(item.startDate).format('YYYY-MM-DD'));
           let eventList = eventStartList.filter(item => moment(this.displayDate).format('YYYY-MM-DD') <= moment(item.endDate).format('YYYY-MM-DD'))
           return eventList;
-         }
+         },
+        // watchStartEndTime(){
+        //   console.log(this.updateEventData.startEndTime)
+        // }
       },
     methods:{
       logout() {
@@ -239,6 +242,8 @@ export default {
       return null;
     },
       updateEvent(event){
+        console.log("event:::::::")
+        console.log(event);
         this.updateEventData = event;
         event.startEndTime = [event.startDate,event.endDate];
       }
